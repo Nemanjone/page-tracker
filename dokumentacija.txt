@@ -1,3 +1,73 @@
+### https://realpython.com/docker-continuous-integration/
 
+### run na lokalu
 . venv/bin/activate
+. web/venv/bin/activate
 flask --app src/page_tracker.app run --debug
+
+### run na docker hub-u
+
+docker login -u Nemanja1909
+
+docker tag page-tracker:latest nemanja1909/page-tracker:latest
+docker push nemanja1909/page-tracker:latest
+
+docker pull nemanja1909/page-tracker
+
+### ovo ga run-uje sa greskom jer redis nije povezan
+docker run -p 80:5000 --name web-service nemanja1909/page-tracker
+
+### zaustavi, nadji page-tracker kontejner i obrisi ga
+Ctrl+C
+docker ps -a
+docker rm dd446a1b72a7
+
+#The proper way to connect your Flask web application to Redis through Docker is by creating a dedicated virtual network. First, list the available networks to check if you’ve already created page-tracker-network:#
+docker network ls
+
+#If it’s not there, then you can create one now by issuing the following command:#
+docker network create page-tracker-network
+
+#In a similar fashion, you can create a volume for the Redis server to store its data persistently on your host machine#
+docker volume create redis-volume
+
+docker run -d \
+             -p 80:5000 \
+             -e REDIS_URL=redis://redis-service:6379 \
+             --network page-tracker-network \
+             --name web-service \
+             nemanja1909/page-tracker
+
+### sa docker-compose
+docker-compose up -d
+
+### useful docker-compose commands
+$ docker compose ps
+NAME                           COMMAND                  SERVICE        ...
+page-tracker-redis-service-1   "docker-entrypoint.s…"   redis-service  ...
+page-tracker-web-service-1     "flask --app page_tr…"   web-service    ...
+
+$ docker-compose logs --follow
+(...)
+page-tracker-web-service-1    |  * Running on all addresses (0.0.0.0)
+page-tracker-web-service-1    |  * Running on http://127.0.0.1:5000
+page-tracker-web-service-1    |  * Running on http://172.20.0.3:5000
+page-tracker-web-service-1    | Press CTRL+C to quit
+
+$ docker-compose stop
+[+] Running 2/2
+ ⠿ Container page-tracker-web-service-1    Stopped                     10.3s
+ ⠿ Container page-tracker-redis-service-1  Stopped                      0.4s
+
+$ docker-compose restart
+[+] Running 2/2
+ ⠿ Container page-tracker-redis-service-1  Started                      0.4s
+ ⠿ Container page-tracker-web-service-1    Started                      0.5s
+
+$ docker-compose down --volumes
+[+] Running 4/4
+ ⠿ Container page-tracker-web-service-1    Removed                      6.0s
+ ⠿ Container page-tracker-redis-service-1  Removed                      0.4s
+ ⠿ Volume page-tracker_redis-volume        Removed                      0.0s
+ ⠿ Network page-tracker_backend-network    Removed                      0.1s
+
