@@ -1,0 +1,29 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="object.bridge_run_id" />
+          <option value="object.bridge_task_id" />
+          <option value="object.extension_id" />
+          <option value="object.bridge_data" />
+          <option value="object.bridge_raw_data_id" />
+          <option value="object.bridge_data_id" />
+          <option value="object.bridge_action_data" />
+          <option value="object.api_endpoint" />
+          <option value="object.raw_data_id" />
+          <option value="object.raw_data_data" />
+          <option value="object.raw_data_client_id" />
+          <option value="object.raw_data_client_ext_app_id" />
+          <option value="object.raw_data_run_id" />
+          <option value="object.edk_protocol" />
+          <option value="object.raw_message" />
+          <option value="object.info" />
+          <option value="object.status" />
+          <option value="str.__await__" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
