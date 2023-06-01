@@ -40,6 +40,7 @@ docker run -d \
 
 ### sa docker-compose
 docker-compose up -d
+docker-compose up --build
 
 ### useful docker-compose commands
 $ docker compose ps
