@@ -2,8 +2,8 @@
 
 import unittest.mock
 from redis import ConnectionError
-import pytest
-from page_tracker.app import app
+# import pytest
+# from page_tracker.app import app
 
 
 # @pytest.fixture

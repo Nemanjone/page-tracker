@@ -72,3 +72,7 @@ $ docker-compose down --volumes
  ⠿ Volume page-tracker_redis-volume        Removed                      0.0s
  ⠿ Network page-tracker_backend-network    Removed                      0.1s
 
+###you can now run your end-to-end tests
+python -m pytest web/test/e2e/ \
+  --flask-url http://localhost \
+  --redis-url redis://localhost:6379
